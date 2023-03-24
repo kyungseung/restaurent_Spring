@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+		
+	<context:component-scan base-package="com.spring.*" />
+	
+	<!-- WEB-INF/views/boardViews/AAA.jsp   -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/restaurantviews/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	
+	<!-- spring jdbc를 위한 설정 -->
+	<context:property-placeholder location="/resources/config/database.properties"/>
+	
+	<bean id="dataSource" 
+		  class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		  <property name="driverClass" value="${jdbc.driverClass}" />
+		  <property name="url" value="${jdbc.url}" />
+		  <property name="username" value="${jdbc.username}" />
+		  <property name="password" value="${jdbc.password}" />	
+    </bean>
+    
+    <!-- spring jdbcTemplae 객체 생성 -->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+    	<property name="dataSource" ref="dataSource" />
+    </bean>
+
+</beans>
